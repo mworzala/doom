@@ -1,5 +1,6 @@
 package doom;
 
+import doom.command.PlayerCommand;
 import doom.player.DoomPlayer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
@@ -19,6 +20,8 @@ public class DoomServer {
     public static void main(String[] args) {
         MinecraftServer server = MinecraftServer.init();
         MinecraftServer.getConnectionManager().setPlayerProvider(DoomPlayer::new);
+
+        MinecraftServer.getCommandManager().register(new PlayerCommand());
 
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
         InstanceContainer instanceContainer = instanceManager.createInstanceContainer();

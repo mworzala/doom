@@ -4,7 +4,7 @@
         "srcrgb": "srcalpha",
         "dstrgb": "1-srcalpha"
     },
-    "vertex": "doom/particle",
+    "vertex": "particle",
     "fragment": "particle",
     "attributes": [
         "Position",

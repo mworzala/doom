@@ -4,7 +4,7 @@
         "srcrgb": "srcalpha",
         "dstrgb": "1-srcalpha"
     },
-    "vertex": "doom/rendertype_translucent",
+    "vertex": "rendertype_translucent",
     "fragment": "rendertype_translucent",
     "attributes": [
         "Position",

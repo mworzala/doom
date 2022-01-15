@@ -4,7 +4,7 @@
         "srcrgb": "srcalpha",
         "dstrgb": "1-srcalpha"
     },
-    "vertex": "doom/rendertype_cutout",
+    "vertex": "rendertype_cutout",
     "fragment": "rendertype_cutout",
     "attributes": [
         "Position",

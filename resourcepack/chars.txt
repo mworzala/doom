@@ -2,4 +2,12 @@
 
 Which characters are being used and for what:
 
-Logo    \uEFF1
+Logo        \uEFF1  122x60
+
+Hud BG L    \uEFF2  160x32 @ 1.5
+Hud BG R    \uEFF3  160x32 @ 1.5
+
+Numbers todo
+
+Faces               24x30  @ 1.5
+S0 Center   \uE100
