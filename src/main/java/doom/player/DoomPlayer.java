@@ -1,10 +1,21 @@
 package doom.player;
 
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Pos;
 import doom.font.FontBuilder;
 import doom.font.FontUtil;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Player;
+import net.minestom.server.event.EventFilter;
+import net.minestom.server.event.EventListener;
+import net.minestom.server.event.EventNode;
+import net.minestom.server.event.player.PlayerPacketEvent;
+import net.minestom.server.event.trait.PlayerEvent;
+import net.minestom.server.network.packet.client.play.ClientPlayerPositionAndRotationPacket;
+import net.minestom.server.network.packet.client.play.ClientPlayerRotationPacket;
+import net.minestom.server.network.packet.server.play.PlayerPositionAndLookPacket;
 import net.minestom.server.network.player.PlayerConnection;
+import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.MathUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,6 +24,14 @@ import java.util.UUID;
 import static doom.font.FontCharacter.*;
 
 public class DoomPlayer extends Player {
+
+    private static final EventNode<PlayerEvent> eventNode = EventNode.type("doom-player-event-node", EventFilter.PLAYER);
+
+    static {
+        MinecraftServer.getGlobalEventHandler().addChild(eventNode);
+    }
+
+    private int waitTicks = 0;
     public static final int AMMO_BULLETS = 0;
     public static final int AMMO_SHELLS = 1;
     public static final int AMMO_ROCKETS = 2;
@@ -28,6 +47,8 @@ public class DoomPlayer extends Player {
     public DoomPlayer(@NotNull UUID uuid, @NotNull String username, @NotNull PlayerConnection playerConnection) {
         super(uuid, username, playerConnection);
 
+//        MinecraftServer.getSchedulerManager().submitTask(() -> {
+//        });
         reset();
     }
 
@@ -67,6 +88,11 @@ public class DoomPlayer extends Player {
         sendActionBar(Component.text(message));
 
         super.update(time);
+
+        Pos playerPos = getPosition();
+        position = playerPos.withPitch(0.0f);
+        final byte flag = 0x01 | 0x02 | 0x04 | 0x8;
+            sendPacket(new PlayerPositionAndLookPacket(new Pos(0, 0, 0, 0, 0), flag, 0, false));
     }
 
     public void reset() {
@@ -131,4 +157,18 @@ public class DoomPlayer extends Player {
     public void setHealth(float health) {
         super.setHealth(health);
     }
+
+//    @Override
+//    public void update(long tick) {
+//        super.update(tick);
+//        if (waitTicks == 3) {
+//            System.out.println("player pos: " + position.withPitch(20.0f));
+////            facePosition();
+//            sendPacket(new PlayerPositionAndLookPacket(position.withPitch(20.0f), (byte) 0, 0, false));
+//            waitTicks = 0;
+//        }
+//        else {
+//            waitTicks++;
+//        }
+//    }
 }
