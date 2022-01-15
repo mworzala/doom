@@ -88,6 +88,10 @@ public class DoomPlayer extends Player {
         ammo[type] = amount;
     }
 
+    public void addAmmo(int type, int amount) {
+        ammo[type] = MathUtils.clamp(ammo[type] + amount, 0, maxAmmo[type]);
+    }
+
     @Override
     public void update(long time) {
 

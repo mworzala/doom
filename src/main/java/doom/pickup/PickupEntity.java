@@ -1,6 +1,7 @@
 package doom.pickup;
 
 import doom.player.DoomPlayer;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
@@ -11,8 +12,14 @@ import net.minestom.server.instance.Instance;
 public class PickupEntity extends Entity {
     private static final float PICKUP_RANGE = 0.5f;
 
-    public PickupEntity() {
+    private final Pickup pickup;
+
+    public PickupEntity(Pickup pickup, Instance instance, Pos position) {
         super(EntityType.ARMOR_STAND);
+
+        this.pickup = pickup;
+
+        setInstance(instance, position);
     }
 
     @Override
@@ -31,7 +38,10 @@ public class PickupEntity extends Entity {
     private void pickup(Player msPlayer) {
         if (!(msPlayer instanceof DoomPlayer player)) return;
 
-        player.sendMessage("Picked up item!");
+        if (!pickup.shouldPickUp(player)) return;
+
+        player.sendMessage("Picked up " + pickup.name() + "!"); //todo send pickup message
+        pickup.pickUp(player);
         remove();
     }
 }

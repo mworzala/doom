@@ -1,6 +1,7 @@
 package doom;
 
 import doom.command.PlayerCommand;
+import doom.command.SpawnCommand;
 import doom.enemy.BaseEntity;
 import doom.pickup.PickupEntity;
 import doom.player.DoomPlayer;
@@ -25,6 +26,7 @@ public class DoomServer {
         MinecraftServer.getConnectionManager().setPlayerProvider(DoomPlayer::new);
 
         MinecraftServer.getCommandManager().register(new PlayerCommand());
+        MinecraftServer.getCommandManager().register(new SpawnCommand());
 
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
         InstanceContainer instanceContainer = instanceManager.createInstanceContainer();
@@ -39,8 +41,6 @@ public class DoomServer {
             entity.setInstance(instanceContainer, entityPos);
             instanceContainer.setBlock(entityPos.add(new Vec(0, -1, 0)), Block.EMERALD_BLOCK);
 
-            PickupEntity pickup = new PickupEntity();
-            pickup.setInstance(instanceContainer, new Pos(-10, 40, 10));
         });
 
         globalEventHandler.addListener(PlayerSpawnEvent.class, event -> {
