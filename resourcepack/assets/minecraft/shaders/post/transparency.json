@@ -6,13 +6,14 @@
         "particles",
         "clouds",
         "weather",
+        "dithering",
         "final"
     ],
     "passes": [
         {
             "name": "transparency",
             "intarget": "minecraft:main",
-            "outtarget": "final",
+            "outtarget": "dithering",
             "auxtargets": [
                 {
                     "name": "DiffuseDepthSampler",
@@ -59,6 +60,11 @@
                     "id": "weather:depth"
                 }
             ]
+        },
+        {
+            "name": "blit_dither",
+            "intarget": "dithering",
+            "outtarget": "final"
         },
         {
             "name": "blit",

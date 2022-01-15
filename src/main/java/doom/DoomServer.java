@@ -2,21 +2,21 @@ package doom;
 
 import doom.command.PlayerCommand;
 import doom.enemy.BaseEntity;
+import doom.pickup.PickupEntity;
 import doom.player.DoomPlayer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerLoginEvent;
+import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.instance.*;
 import net.minestom.server.instance.batch.ChunkBatch;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.timer.TaskSchedule;
-import net.minestom.server.world.biomes.Biome;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class DoomServer {
@@ -38,6 +38,13 @@ public class DoomServer {
             BaseEntity entity = new BaseEntity(entityPos);
             entity.setInstance(instanceContainer, entityPos);
             instanceContainer.setBlock(entityPos.add(new Vec(0, -1, 0)), Block.EMERALD_BLOCK);
+
+            PickupEntity pickup = new PickupEntity();
+            pickup.setInstance(instanceContainer, new Pos(-10, 40, 10));
+        });
+
+        globalEventHandler.addListener(PlayerSpawnEvent.class, event -> {
+            event.getPlayer().setGameMode(GameMode.CREATIVE);
         });
 
         server.start("0.0.0.0", 25565);
