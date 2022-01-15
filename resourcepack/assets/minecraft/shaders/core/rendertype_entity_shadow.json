@@ -4,8 +4,8 @@
         "srcrgb": "srcalpha",
         "dstrgb": "1-srcalpha"
     },
-    "vertex": "doom/rendertype_entity_shadow",
-    "fragment": "rendertype_entity_shadow",
+    "vertex": "rendertype_entity_shadow",
+    "fragment": "doom/rendertype_entity_shadow",
     "attributes": [
         "Position",
         "Color",
