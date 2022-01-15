@@ -8,6 +8,13 @@
       "chars": [
         "-"
       ]
+    },
+    {
+      "type": "bitmap",
+      "file": "doom:misc/logo.png",
+      "ascent": 30,
+      "height": 60,
+      "chars": ["\uEff1"]
     }
   ]
 }

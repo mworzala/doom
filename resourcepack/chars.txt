@@ -1,0 +1,5 @@
+
+
+Which characters are being used and for what:
+
+Logo    \uEFF1
