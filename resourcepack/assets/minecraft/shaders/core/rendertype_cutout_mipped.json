@@ -5,7 +5,7 @@
         "dstrgb": "1-srcalpha"
     },
     "vertex": "doom/rendertype_cutout_mipped",
-    "fragment": "doom/rendertype_cutout_mipped",
+    "fragment": "rendertype_cutout_mipped",
     "attributes": [
         "Position",
         "Color",
