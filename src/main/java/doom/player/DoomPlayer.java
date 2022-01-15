@@ -101,10 +101,10 @@ public class DoomPlayer extends Player {
 
         super.update(time);
 
-//        Pos playerPos = getPosition();
-//        position = playerPos.withPitch(0.0f);
-//        final byte flag = 0x01 | 0x02 | 0x04 | 0x8;
-//            sendPacket(new PlayerPositionAndLookPacket(new Pos(0, 0, 0, 0, 0), flag, 0, false));
+        Pos playerPos = getPosition();
+        position = playerPos.withPitch(0.0f);
+        final byte flag = 0x01 | 0x02 | 0x04 | 0x8;
+        sendPacket(new PlayerPositionAndLookPacket(new Pos(0, 0, 0, 0, 0), flag, 0, false));
     }
 
     public void reset() {
