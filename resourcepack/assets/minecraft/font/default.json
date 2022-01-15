@@ -1,0 +1,13 @@
+{
+  "providers": [
+    {
+      "type": "ttf",
+      "file": "space:font/space_split.png",
+      "ascent": -32768,
+      "height": -6767,
+      "chars": [
+        "-"
+      ]
+    }
+  ]
+}
