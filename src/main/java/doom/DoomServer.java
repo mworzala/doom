@@ -1,15 +1,18 @@
 package doom;
 
 import doom.command.PlayerCommand;
+import doom.enemy.BaseEntity;
 import doom.player.DoomPlayer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.instance.*;
 import net.minestom.server.instance.batch.ChunkBatch;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.world.biomes.Biome;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,6 +34,10 @@ public class DoomServer {
             final Player player = event.getPlayer();
             event.setSpawningInstance(instanceContainer);
             player.setRespawnPoint(new Pos(0, 42, 0));
+            Pos entityPos = new Pos(2, 40, 0);
+            BaseEntity entity = new BaseEntity(entityPos);
+            entity.setInstance(instanceContainer, entityPos);
+            instanceContainer.setBlock(entityPos.add(new Vec(0, -1, 0)), Block.EMERALD_BLOCK);
         });
 
         server.start("0.0.0.0", 25565);
