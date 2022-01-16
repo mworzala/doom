@@ -18,11 +18,26 @@ public class PlayerCommand extends Command {
         addSubcommand(new Ammo());
 
         addSyntax(this::onReset, ArgumentType.Literal("reset"));
+        addSyntax(this::onSetLocked, ArgumentType.Literal("locked"), ArgumentType.Boolean("locked"));
+        addSyntax(this::onSave, ArgumentType.Literal("save"));
     }
 
     private void onReset(@NotNull CommandSender sender, @NotNull CommandContext context) {
         DoomPlayer player = (DoomPlayer) sender;
         player.reset();
+    }
+
+    private void onSetLocked(@NotNull CommandSender sender, @NotNull CommandContext context) {
+        DoomPlayer player = (DoomPlayer) sender;
+        player.setPitchLocked(context.get("locked"));
+    }
+
+    private void onSave(@NotNull CommandSender sender, @NotNull CommandContext context) {
+        DoomPlayer player = (DoomPlayer) sender;
+        player.sendMessage("Saving...");
+        player.getInstance().saveChunksToStorage().join();
+        player.getInstance().saveInstance().join();
+        player.sendMessage("Done!");
     }
 
     public static class Health extends Command {

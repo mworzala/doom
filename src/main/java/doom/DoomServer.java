@@ -1,5 +1,6 @@
 package doom;
 
+import doom.command.GamemodeCommand;
 import doom.command.PlayerCommand;
 import doom.command.SpawnCommand;
 import doom.enemy.BaseEntity;
@@ -27,6 +28,7 @@ public class DoomServer {
 
         MinecraftServer.getCommandManager().register(new PlayerCommand());
         MinecraftServer.getCommandManager().register(new SpawnCommand());
+        MinecraftServer.getCommandManager().register(new GamemodeCommand());
 
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
         InstanceContainer instanceContainer = instanceManager.createInstanceContainer();
@@ -35,16 +37,18 @@ public class DoomServer {
         globalEventHandler.addListener(PlayerLoginEvent.class, event -> {
             final Player player = event.getPlayer();
             event.setSpawningInstance(instanceContainer);
-            player.setRespawnPoint(new Pos(0, 42, 0));
-            Pos entityPos = new Pos(2, 40, 0);
-            BaseEntity entity = new BaseEntity(entityPos);
-            entity.setInstance(instanceContainer, entityPos);
-            instanceContainer.setBlock(entityPos.add(new Vec(0, -1, 0)), Block.EMERALD_BLOCK);
+            player.setRespawnPoint(new Pos(11, -59, 33.5));
+
+//            Pos entityPos = new Pos(2, 40, 0);
+//            BaseEntity entity = new BaseEntity(entityPos);
+//            entity.setInstance(instanceContainer, entityPos);
+//            instanceContainer.setBlock(entityPos.add(new Vec(0, -1, 0)), Block.EMERALD_BLOCK);
 
         });
 
         globalEventHandler.addListener(PlayerSpawnEvent.class, event -> {
             event.getPlayer().setGameMode(GameMode.CREATIVE);
+            event.getPlayer().setPermissionLevel(4);
         });
 
         server.start("0.0.0.0", 25565);

@@ -8,6 +8,7 @@ import net.minestom.server.coordinate.Pos;
 import doom.font.FontBuilder;
 import doom.font.FontUtil;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.EventFilter;
 import net.minestom.server.event.EventListener;
@@ -52,11 +53,11 @@ public class DoomPlayer extends Player {
     private Weapon weapon = Weapon.PISTOL;
     private int[] ammo;
 
+    public boolean pitchLocked = true;
+
     public DoomPlayer(@NotNull UUID uuid, @NotNull String username, @NotNull PlayerConnection playerConnection) {
         super(uuid, username, playerConnection);
 
-//        MinecraftServer.getSchedulerManager().submitTask(() -> {
-//        });
         reset();
     }
 
@@ -76,6 +77,10 @@ public class DoomPlayer extends Player {
         return ammo[type];
     }
 
+    public boolean isPitchLocked() {
+        return pitchLocked;
+    }
+
     public void setDoomHealth(int integer) {
         health = MathUtils.clamp(integer, 0, 199);
     }
@@ -92,6 +97,10 @@ public class DoomPlayer extends Player {
         ammo[type] = MathUtils.clamp(ammo[type] + amount, 0, maxAmmo[type]);
     }
 
+    public void setPitchLocked(boolean pitchLocked) {
+        this.pitchLocked = pitchLocked;
+    }
+
     @Override
     public void update(long time) {
 
@@ -102,9 +111,11 @@ public class DoomPlayer extends Player {
         super.update(time);
 
         Pos playerPos = getPosition();
-        position = playerPos.withPitch(0.0f);
-        final byte flag = 0x01 | 0x02 | 0x04 | 0x8;
-        sendPacket(new PlayerPositionAndLookPacket(new Pos(0, 0, 0, 0, 0), flag, 0, false));
+        if (getGameMode() == GameMode.ADVENTURE && pitchLocked) {
+            position = playerPos.withPitch(0.0f);
+            final byte flag = 0x01 | 0x02 | 0x04 | 0x8;
+            sendPacket(new PlayerPositionAndLookPacket(new Pos(0, 0, 0, 0, 0), flag, 0, false));
+        }
     }
 
     public void reset() {
